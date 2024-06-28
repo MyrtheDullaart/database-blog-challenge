@@ -74,6 +74,28 @@ async function seed() {
 
     console.log(`Posts created`, createdPosts);
 
+    const createdComments = await prisma.comment.createManyAndReturn({
+        data: [
+            {
+                content: 'hjucvbdsxbcsdjknxjksacbnx',
+                userId: createdUsers[0].id,
+                postId: createdPosts[1].id
+            },
+            {
+                content: 'vghubdhsuvccjnsxzodpaswjcxn',
+                userId: createdUsers[1].id,
+                postId: createdPosts[2].id
+            },
+            {
+                content: 'poiuytrdfcfvgvbgbhn',
+                userId: createdUsers[2].id,
+                postId: createdPosts[0].id
+            }
+        ]
+    })
+
+    console.log(`Comments created`, createdComments);
+
     process.exit(0);
 }
 
