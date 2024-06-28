@@ -29,7 +29,7 @@ model Profile {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   userId      Int       @unique
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Post {
@@ -41,7 +41,7 @@ model Post {
   published   Boolean     @default(true)
   title       String      @db.VarChar(150)
   userId      Int       
-  user        User        @relation(fields: [userId], references: [id])
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   comments    Comment[]
 }
 
@@ -51,7 +51,7 @@ model Comment {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   userId      Int       
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   postId      Int       
-  post        Post      @relation(fields: [postId], references: [id])
+  post        Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
