@@ -46,12 +46,15 @@ model Post {
 }
 
 model Comment {
-  id          Int       @id @default(autoincrement())
-  content     String    @db.VarChar(250)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  userId      Int       
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId      Int       
-  post        Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  id              Int       @id @default(autoincrement())
+  content         String    @db.VarChar(250)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  userId          Int       
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId          Int       
+  post            Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parentCommentId Int?
+  parentComment   Comment?  @relation("CommentHistory", fields: [parentCommentId], references: [id]) 
+  replies         Comment[] @relation("CommentHistory")
 }
