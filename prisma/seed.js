@@ -2,22 +2,78 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function seed() {
-    const createdUsers = await prisma.user.createMany({
+    const createdUsers = await prisma.user.createManyAndReturn({
         data: [
-            { username: 'alicea', email: 'something'},
+            { username: 'alicea', email: 'something' },
             { username: 'janedoe', email: 'somethingelse' },
             { username: 'markymark', email: 'else' }
         ]
     });
 
-    console.log(`${createdUsers.count} users created`, createdUsers);
+    console.log(`Users created`, createdUsers);
 
-    // Add your code here
+    const createdProfiles = await prisma.profile.createManyAndReturn({
+        data: [
+            { 
+                bio: 'balhdscbvdhsjc', 
+                pictureUrl: 'ncddjvcddjv', 
+                userId: createdUsers[0].id 
+            },
+            { 
+                bio: 'bcdshvucgjbdhjsv', 
+                pictureUrl: 'klnmvdijdhsv', 
+                userId: createdUsers[1].id 
+            },
+            { 
+                bio: 'oininocfiujdsbfbfduvyb', 
+                pictureUrl: 'tyefdevsgcydgsvyegvy', 
+                userId: createdUsers[2].id 
+            }
+        ]
+    })
 
-    
+    console.log(`Profiles created`, createdProfiles);
 
+    const createdPosts = await prisma.post.createManyAndReturn({
+        data: [
+            { 
+                content: 'huvbchdscvuhcvdchgvdscdsghccgvydschdhsuvcdshv', 
+                pictureUrl: 'jkcnsajdcbdsc', 
+                title: 'hcbvshdjcv',
+                userId: createdUsers[0].id 
+            },
+            { 
+                content: 'huvbchdscvuhcvdchgvdscdsghccgvydschdhsuvcdshvfdvgdrfsvgfv',
+                title: 'hcbvshdjcvdvsvvsd',
+                userId: createdUsers[0].id 
+            },
+            { 
+                content: 'huvbchdscvuhcvdchgvdscdsghdvfvfdfvfdfvfdvfdvsuvcdshv', 
+                pictureUrl: 'jkcnsajdcbdscdscdscdsc', 
+                title: 'dscdscdc',
+                userId: createdUsers[1].id 
+            },
+            { 
+                content: 'hudasxcscdfsvcdsvdsghdvfvfdfvfdfvfdvfdvsuvcdshv', 
+                title: 'bgbgnhnmmgdfsxdsvx',
+                userId: createdUsers[1].id 
+            },
+            { 
+                content: 'hudasfbgmjlyupoykuikyjhfvcfvfdfvfdvfdvsuvcdshv', 
+                title: 'sdfcxvbcvdfgdvx',
+                userId: createdUsers[2].id 
+            },
+            { 
+                content: 'qwdsefrthjuyhjkmhngbgbffvdvcxz',
+                pictureUrl: 'nbcdbdhsjcvbdbdfhchv', 
+                title: 'dsfccccccccccccgh',
+                userId: createdUsers[2].id 
+            }
+        ]
+    })
 
-    // Don't edit any of the code below this line
+    console.log(`Posts created`, createdPosts);
+
     process.exit(0);
 }
 

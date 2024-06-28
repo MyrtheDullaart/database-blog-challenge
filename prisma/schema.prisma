@@ -17,4 +17,28 @@ model User {
   email       String    @unique
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  profile     Profile?
+  posts       Post[]
+}
+
+model Profile {
+  id          Int       @id @default(autoincrement())
+  bio         String    @db.VarChar(120)
+  pictureUrl  String    
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      Int       @unique
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  content     String    @db.Text    
+  pictureUrl  String?    
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  published   Boolean   @default(true)
+  title       String    @db.VarChar(150)
+  userId      Int       
+  user        User      @relation(fields: [userId], references: [id])
 }
